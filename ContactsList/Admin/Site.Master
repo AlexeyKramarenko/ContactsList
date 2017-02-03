@@ -1,0 +1,50 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ContactsList.Admin.Site" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="../Content/custom.css" rel="stylesheet" />
+    <link href="../Content/admin.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img id="logo" src="../Content/logo.png" />
+            </div>
+            <ul class="nav navbar-nav">
+                <li ><a href="/">Главная</a></li>
+
+                <li  class="dropdown active" >
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Администратор<span class="caret"></span></a>
+                    <ul class="dropdown-menu">  
+                        <li><a href="/admin/editcountries.aspx">Редактирование стран</a></li>
+                        <li><a href="/admin/edittowns.aspx">Редактирование городов</a></li>
+                        <li><a href="/admin/companies.aspx">Редактирование компаний</a></li>
+                        <li><a href="/admin/addcompany.aspx">Добавить компанию</a></li>
+                    </ul>
+                </li >
+            </ul>
+
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/account/logout"><span class="glyphicon glyphicon-log-in"></span>Выйти</a></li>
+            </ul>
+        </div>
+    </nav>
+    <form id="form1" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

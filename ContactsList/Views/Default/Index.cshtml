@@ -1,0 +1,42 @@
+﻿@model List<ContactsList.Models.CompanyItemViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="@Url.Content("~/Content/main.css")" rel="stylesheet" />
+
+<h2>Список компаний:</h2>
+
+<select id="sortByExpression" onchange="obj.sortRetrievedRows()">
+    <option value="ID">ID</option>
+    <option value="Name">Предприятие</option>
+    <option value="TownName">Город</option>
+    <option value="ActivityName">Род деятельности</option>
+</select>
+ 
+<table id="companyList" class="table table-bordered table-striped table-selectable">
+    <thead>
+        <tr>
+            <th>Предприятие</th>
+            <th>Адрес</th>
+            <th>Деятельность</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.TownName</td>
+                <td>@item.ActivityName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button type="button" id="btnShowMore" class="btn btn-default" onclick="obj.getNextCompanyList(10)">Show more</button>
+
+<script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script> 
+<script src="@Url.Content("~/Scripts/obj.js")"></script>

@@ -1,0 +1,163 @@
+﻿.deleteBtn {
+    width: 14px;
+    margin-left: 10px;
+}
+
+
+#addCompanyForm tr td {
+    padding: 5px;
+    vertical-align: top;
+}
+
+
+
+    #addCompanyForm tr td:nth-child(1) {
+        background-color: #e8fefe;
+        border: 1px solid black;
+        text-align: right;
+    }
+
+    #addCompanyForm tr td:nth-child(2) {
+        background-color: #c8f6f6;
+        border: 1px solid black;
+    }
+
+#saveBtn {
+    display: block;
+    width: 100px;
+    margin: auto;
+}
+
+@media(max-width:3000px) {
+
+    #companyLocation {
+        width: 400px;
+        margin: auto;
+        font-size: 1.10em;
+    }
+
+        #companyLocation tr td {
+            padding: 4px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        #companyLocation tbody tr td ul {
+            list-style-type: none;
+            margin-left: -40px;
+        }
+
+        #companyLocation tr td select {
+            width: 100%;
+        }
+
+        #companyLocation tr td:nth-child(1) {
+            width: 150px;
+        }
+
+        #companyLocation tr td:nth-child(2) {
+            width: 200px;
+        }
+
+    #addCompanyForm {
+        margin: 20px auto;
+    }
+
+        #addCompanyForm tr td {
+            font-size: 1.15em;
+        }
+
+            #addCompanyForm tr td:nth-child(1) {
+                width: 135px;
+            }
+
+            #addCompanyForm tr td:nth-child(2) {
+                width: 265px;
+            }
+
+        #addCompanyForm tbody tr td input[type=text] {
+            width: 100%;
+        }
+
+        #addCompanyForm tbody tr td select#activity {
+            min-width: 50%;
+        }
+}
+
+@media(max-width:500px) {
+
+    #companyLocation {
+        width: 200px;
+        margin: auto;
+        font-size: 0.85em;
+    }
+
+        #companyLocation tr td {
+            padding: 4px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        #companyLocation tbody tr td ul {
+            list-style-type: none;
+            margin-left: -40px;
+        }
+
+        #companyLocation tr td select {
+            width: 100%;
+        }
+
+        #companyLocation tr td:nth-child(1) {
+            width: 100px;
+        }
+
+        #companyLocation tr td:nth-child(2) {
+            width: 100px;
+        }
+
+
+    #addCompanyForm {
+        margin: auto;
+    }
+
+        #addCompanyForm tr td {
+            font-size: 0.85em;
+        }
+
+            #addCompanyForm tr td:nth-child(1) {
+                width: 50px;
+            }
+
+            #addCompanyForm tr td:nth-child(2) {
+                width: 350px;
+            }
+}
+
+#CheckBoxList1 {
+    background-color: antiquewhite;
+    text-align: left;
+    margin: 5px auto 5px 25px;
+}
+
+    #CheckBoxList1 tr td:nth-child(1) {
+        font-size: 1em;
+        line-height: 1em;
+        font-family: 'Times New Roman';
+        border: none;
+        width: 50px;
+        text-align: left;
+        border: 1px solid black;
+        padding:5px;
+    }
+
+
+    #UpdatePanel1,#UpdatePanel2{
+        max-width:450px;
+        margin:auto;
+
+
+    }
+    #UpdatePanel2 span{
+        color:red;
+        font-size:1.2em;
+    }
