@@ -22,47 +22,33 @@ namespace ContactsList.Admin
 
         public List<CountryViewModel> GetCountries()
         {
-            using(var db = ContactsRepository)
-            {
-                List<Country> countries = ContactsRepository.GetCountries();
-                List<CountryViewModel> countriesVM = Mapper.Map<List<Country>, List<CountryViewModel>>(countries);
-                return countriesVM;
-            } 
+            List<Country> countries = ContactsRepository.GetCountries();
+            List<CountryViewModel> countriesVM = Mapper.Map<List<Country>, List<CountryViewModel>>(countries);
+            return countriesVM;
         }
+
         public void AddTown(AddTownViewModel model, [Control("ddlCountry")]int CountryID)
         {
-            using (var db = ContactsRepository)
-            {
-                db.AddTown(model.Name, CountryID);
-            }
-        }        
+            ContactsRepository.AddTown(model.Name, CountryID);
+        }
         public List<TownViewModel> GetTowns([Control("ddlCountry")]int? CountryID)
         {
             List<TownViewModel> townsVM = null;
             int countryId = 1;
             if (CountryID.HasValue)
                 countryId = CountryID.Value;
+            List<Town> towns = ContactsRepository.GetTowns(countryId);
+            townsVM = Mapper.Map<List<Town>, List<TownViewModel>>(towns);
+            return townsVM;
 
-            using (var db = ContactsRepository)
-            {
-                List<Town> towns = db.GetTowns(countryId);
-                townsVM = Mapper.Map<List<Town>, List<TownViewModel>>(towns);
-                return townsVM;
-            }
         }
         public void RemoveTown(int ID)
         {
-            using (var db = ContactsRepository)
-            {
-                db.RemoveTownByID(ID);
-            }
+            ContactsRepository.RemoveTownByID(ID);
         }
         public void UpdateTownName(TownViewModel town)
         {
-            using (var db = ContactsRepository)
-            {
-                db.UpdateTownName(town.Name, town.ID);
-            }
+            ContactsRepository.UpdateTownName(town.Name, town.ID);
         }
         protected void TownsGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -85,6 +71,10 @@ namespace ContactsList.Admin
         protected void Page_PreRender(object sender, EventArgs e)
         {
             TownsGridView.DataBind();
+        }
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+            ContactsRepository.Dispose();
         }
     }
 }

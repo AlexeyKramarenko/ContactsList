@@ -25,29 +25,26 @@ namespace ContactsList.Admin
         }
 
         public List<CompanyItemViewModel> GetCompanies(int maximumRows, int startRowIndex, out int totalRowCount, [Control] string sortByExpression)
-        {            
-            using(var db = CompanyRepository)
-            {
-                List<Company> companies = db.GetCompanies(maximumRows, ++startRowIndex, out totalRowCount, sortByExpression);
-                List<CompanyItemViewModel> companiesVM = Mapper.Map<List<Company>, List<CompanyItemViewModel>>(companies);
-                return companiesVM;
-            } 
+        {
+
+            List<Company> companies = CompanyRepository.GetCompanies(maximumRows, ++startRowIndex, out totalRowCount, sortByExpression);
+            List<CompanyItemViewModel> companiesVM = Mapper.Map<List<Company>, List<CompanyItemViewModel>>(companies);
+            return companiesVM;
+
         }
         public void UpdateCompanyName(CompanyItemViewModel model)
         {
-            using (var db = CompanyRepository)
-            {
-                db.UpdateCompanyName(model.Name, model.ID);
-            }
+            CompanyRepository.UpdateCompanyName(model.Name, model.ID);
+
         }
         public void RemoveCompany(int ID)
         {
-            using (var db = CompanyRepository)
-            {
-                db.RemoveCompanyByID(ID);
-            }
+            CompanyRepository.RemoveCompanyByID(ID);
         }
 
-        
+        protected void Page_Unload(object sender, EventArgs e)
+        { 
+            CompanyRepository.Dispose();
+        }
     }
 }

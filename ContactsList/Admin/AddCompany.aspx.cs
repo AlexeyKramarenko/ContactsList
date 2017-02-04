@@ -127,23 +127,18 @@ namespace ContactsList.Admin
         }
         public List<CountryViewModel> GetCountries()
         {
-            using (var db = ContactsRepository)
-            {
-                List<Country> countries = ContactsRepository.GetCountries();
-                List<CountryViewModel> countriesVM = Mapper.Map<List<Country>, List<CountryViewModel>>(countries);
-                return countriesVM;
-            }
+            List<Country> countries = ContactsRepository.GetCountries();
+            List<CountryViewModel> countriesVM = Mapper.Map<List<Country>, List<CountryViewModel>>(countries);
+            return countriesVM;
+
         }
         public List<TownViewModel> GetTowns([Control("ddlCountry")] int? countryId)
         {
             if (countryId.HasValue)
             {
-                using (var db = ContactsRepository)
-                {
-                    List<Town> towns = ContactsRepository.GetTowns(countryId.Value);
-                    List<TownViewModel> townsVM = Mapper.Map<List<Town>, List<TownViewModel>>(towns);
-                    return townsVM;
-                }
+                List<Town> towns = ContactsRepository.GetTowns(countryId.Value);
+                List<TownViewModel> townsVM = Mapper.Map<List<Town>, List<TownViewModel>>(towns);
+                return townsVM;
             }
             return new List<TownViewModel>();
         }
@@ -154,22 +149,14 @@ namespace ContactsList.Admin
         public AddCompanyViewModel InitFormView([QueryString]int? companyId)
         {
             List<ActivityViewModel> activitiesVM = null;
-            using (var db = ActivitiesRepository)
-            {
-                List<Activity> activities = db.GetActivities();
-                activitiesVM = Mapper.Map<List<Activity>, List<ActivityViewModel>>(activities);
-            }
-
-
+            List<Activity> activities = ActivitiesRepository.GetActivities();
+            activitiesVM = Mapper.Map<List<Activity>, List<ActivityViewModel>>(activities);
             AddCompanyViewModel model = null;
 
             if (companyId.HasValue)
             {
-                using (var db = CompanyRepository)
-                {
-                    Company company = CompanyRepository.GetCompanyByID(companyId.Value);
-                    model = Mapper.Map<Company, AddCompanyViewModel>(company);
-                }
+                Company company = CompanyRepository.GetCompanyByID(companyId.Value);
+                model = Mapper.Map<Company, AddCompanyViewModel>(company);
             }
             else
             {
@@ -198,17 +185,12 @@ namespace ContactsList.Admin
                     };
 
                     int companyId;
-                    using (var db = CompanyRepository)
-                    {
-                        db.SaveCompany(company);
-                        companyId = db.GetLastInsertedIdentity();
-                    }
 
-                    using (var db = ContactsRepository)
-                    {
-                        foreach (var town in this.ViewStateTowns)
-                            db.AddCompanyTownLink(companyId, town.ID);
-                    }
+                    CompanyRepository.SaveCompany(company);
+                    companyId = CompanyRepository.GetLastInsertedIdentity();
+
+                    foreach (var town in this.ViewStateTowns)
+                        ContactsRepository.AddCompanyTownLink(companyId, town.ID);
 
                     #endregion
 
@@ -262,6 +244,13 @@ namespace ContactsList.Admin
                 towns.Remove(town);
                 this.ViewStateTowns = towns;
             }
+        }
+
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+            ContactsRepository.Dispose();
+            ActivitiesRepository.Dispose();
+            CompanyRepository.Dispose();
         }
     }
 }

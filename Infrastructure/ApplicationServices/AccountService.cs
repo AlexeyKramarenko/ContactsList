@@ -31,6 +31,8 @@ namespace Infrastructure.ApplicationServices
 
             var hash = SecurePasswordHasher.Hash(password);
             OperationResult result = userRepository.CreateUser(username, hash, roleId: 2);
+            userRepository.Dispose();
+
             return result.Succeded;
         }
 
@@ -75,6 +77,8 @@ namespace Infrastructure.ApplicationServices
         public User GetUser(string username, string password)
         {
             User user = userRepository.GetUser(username);
+            userRepository.Dispose();
+
             if (user != null)
             {
                 bool result = SecurePasswordHasher.Verify(password, user.Password);

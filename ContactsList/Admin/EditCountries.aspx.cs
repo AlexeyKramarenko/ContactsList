@@ -18,37 +18,25 @@ namespace ContactsList.Admin
         public IContactsRepository ContactsRepository { get; set; }
         [Inject]
         public IMapper Mapper { get; set; }
-         
+
         public void AddCountry(AddCountryViewModel model)
         {
-            using (var db = ContactsRepository)
-            {
-                db.AddCountry(model.Name);
-            }
+            ContactsRepository.AddCountry(model.Name);
         }
         public List<CountryViewModel> GetCountries()
         {
-            using (var db = ContactsRepository)
-            {
-                List<Country> countries = db.GetCountries();
-                List<CountryViewModel> countriesVM = Mapper.Map<List<Country>, List<CountryViewModel>>(countries);
-                return countriesVM;
-            }
+            List<Country> countries = ContactsRepository.GetCountries();
+            List<CountryViewModel> countriesVM = Mapper.Map<List<Country>, List<CountryViewModel>>(countries);
+            return countriesVM;
         }
         public void UpdateCountryName(CountryViewModel model)
         {
-            using (var db = ContactsRepository)
-            {
-                db.UpdateCountryName(model.Name, model.ID);
-            }
+            ContactsRepository.UpdateCountryName(model.Name, model.ID);
         }
         public void RemoveCountry(int ID)
         {
-            using (var db = ContactsRepository)
-            {
-                db.RemoveCountryByID(ID);
-            }
-        } 
+            ContactsRepository.RemoveCountryByID(ID);
+        }
         protected void CountriesGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -66,10 +54,15 @@ namespace ContactsList.Admin
                     }
                 }
             }
-        } 
+        }
         protected void Page_PreRender(object sender, EventArgs e)
         {
             CountriesGridView.DataBind();
+        }
+
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+            ContactsRepository.Dispose();
         }
     }
 }

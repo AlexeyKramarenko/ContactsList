@@ -31,12 +31,8 @@ namespace ContactsList.Controllers
             User user = accountService.GetUser(model.UserName, model.Password);
             if (user != null)
             {
-                Role role = null;
-                using (var db = userRepository)
-                {
-                   role = userRepository.GetRoleById(user.RoleId);
-                }
-               
+                Role role = userRepository.GetRoleById(user.RoleId);
+                  
                 accountService.Login(user.UserId, user.Name, role.Name);
                 if (role.Name == "Admin")
                     //return RedirectToRoute("Admin");
@@ -65,5 +61,12 @@ namespace ContactsList.Controllers
             accountService.CreateUser(model.UserName, model.Password);
             return RedirectToAction("Login");
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            userRepository.Dispose();
+            base.Dispose(disposing);
+        }
+
     }
 }
